@@ -1,0 +1,25 @@
+<div class="body">
+        <form class="container" [formGroup]="registerForm" *ngIf="!successfulRegistration">
+            <h1>Inscription</h1>
+            <span id="line"></span>
+            <p class="wrong error-div" *ngIf="emailIsAvailable === false">L'email est déjà utilisé</p>
+            <div class="inputs">
+                <input type="text" [ngClass]='userEmailClass' placeholder="Email" formControlName="userEmail" >
+                <input type="password" [ngClass]='passwordClass' placeholder="Mot de passe" formControlName="userPassword" >  
+                <input type="password" [ngClass]='passwordClass' placeholder="Confirmer le mot de passe" formControlName="confirmPassword" > 
+                <p class="wrong error-div" *ngIf="passwordsAreEqual === false">Les mots de passe ne sont pas identiques</p>
+                <p class="wrong error-div" *ngIf="validPassword === false">
+                    Min. 8 caractères, 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère special(!@#$%^&*...)
+                </p>   
+            </div>
+            <button class="main-button" type="submit" (click)="onSubmit()">Inscription</button>
+            <p class="second-button" (click)="onNavigate('/login')">Se connecter</p>
+        </form>
+
+        <div class="success-container" *ngIf="successfulRegistration">
+            <mat-icon class="check_circle">check_circle</mat-icon>
+            <p class="succes-text">Votre inscription a été effectué !</p>
+            <p class="succes-text">Vous venez de recevoir un email afin d'activer votre compte</p>
+            <p class="succes-login-text"><a (click)="onNavigate('/login')">Revenir à la page de connexion</a> </p>
+        </div>
+</div>

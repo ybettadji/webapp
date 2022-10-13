@@ -1,10 +1,11 @@
 import mailjetService from "../externalServices/emails/mailjet/mailjetService.js"
 import { registrationConfirmationTemplate } from '../externalServices/emails/templates/registrationConfirmationTemplate.html.js'
+import { resetPasswordTemplate } from "../externalServices/emails/templates/resetPasswordTemplate.html.js"
 import tokenService from "./tokenService.js"
 
 const sendRegistrationConfirmationEmail = (user) => { 
 
-    const token = tokenService.createRegistrationToken(user) 
+    const token = user.registrationConfirmationToken 
     const sender = {
         Email: process.env.MJ_SENDER_EMAIL,
         Name: process.env.MJ_SENDER_NAME
@@ -22,6 +23,28 @@ const sendRegistrationConfirmationEmail = (user) => {
     return mailjetService.sendEmail(sender, recipient, subject, template, customID, [], []);
 }
 
+
+const sendResetPasswordEmail = (user) => {
+
+    const token = user.resetPasswordToken
+    const sender = {
+        Email: process.env.MJ_SENDER_EMAIL,
+        Name: process.env.MJ_SENDER_NAME
+    }
+    const recipient = [{
+        Email: user.email,
+        Name: ''
+    }]    
+    const confirmationUrl = process.env.FRONTEND_URL + '/reset-password/' + token;
+    const subject = 'Réinitialisez votre mot de passe';
+    const template = resetPasswordTemplate(confirmationUrl)
+    const customID = 'Reset Password'
+
+    
+    return mailjetService.sendEmail(sender, recipient, subject, template, customID, [], []);
+}
+
 export default {
-    sendRegistrationConfirmationEmail
+    sendRegistrationConfirmationEmail,
+    sendResetPasswordEmail
 }

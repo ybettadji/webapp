@@ -1,19 +1,25 @@
-
 import jsonwebtokenService from "../externalServices/tokens/jsonwebtokenService.js"
 
-const createRegistrationToken = (user) => {
+const createRegistrationConfirmationToken = (user) => {
     const payload = {userId: user._id}
-    const secretKey = process.env.JWT_SECRET_KEY
+    const secretKey = process.env.JWT_SECRET_KEY + user.password
     const config = {};
     return jsonwebtokenService.createToken(payload, secretKey, config)
 }
 
-const verifyToken = (token) => {
-    const secretKey = process.env.JWT_SECRET_KEY
+const createResetPasswordToken = (user) => {
+    const payload = {userId: user._id}
+    const secretKey = process.env.JWT_SECRET_KEY + user.password
+    const config = {expiresIn: '15m'};
+    return jsonwebtokenService.createToken(payload, secretKey, config)
+}
+
+const verifyToken = (token, secretKey) => {
     return jsonwebtokenService.verifyToken(token, secretKey)
 }
 
 export default {
-    createRegistrationToken,
+    createRegistrationConfirmationToken,
+    createResetPasswordToken,
     verifyToken
 }

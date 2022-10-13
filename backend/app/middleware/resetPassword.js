@@ -1,10 +1,13 @@
 import tokenService from "../services/tokenService.js";
 import userService from "../services/userService.js";
 /*
-When a user registers, a jwt token is generated in the link that is sent by email. 
+When a user wants to reset a password, a jwt token is generated in the link that is sent by email. 
 Here we check that the token is valid 
+the secretKey is the process.env.JWT_SECRET_KEY + the user password encrypted
 */
-export const checkIfTheRegisterConfirmationTokenIsValid = async (req, res, next) => {
+
+export const middlewareResetPassword = async (req, res, next) => {
+
         const token = req.params.token
 
         const retrieveIdFromPayloadOfJwtToken = (token) => {

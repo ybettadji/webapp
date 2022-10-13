@@ -1,6 +1,8 @@
 import userRegistrationUseCase from "../domain/usecases/userRegistration.js";
 import userAccountConfirmation from "../domain/usecases/userAccountConfirmation.js";
 import bcrypt from "bcrypt";
+import userForgotPassword from "../domain/usecases/userForgotPassword.js";
+import userChangePassword from "../domain/usecases/userChangePassword.js";
 
 const userRegistration = (req, res) => {
 
@@ -73,13 +75,48 @@ const userRegistration = (req, res) => {
 };
 
 const userRegistrationConfirmation = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.body;
+
   return userAccountConfirmation.Execute(id)
         .then(() => res.status(200).json({ message: "The user has been updated" }))
         .catch((error) => res.status(400).json(error.message));
 };
 
+const forgotPassword = async (req, res) => {
+  const {email} = req.body
+  return userForgotPassword.Execute(email)
+        .then(() => res.status(200).json({ message: "An email has been sent" }))
+        .catch((error) => res.status(200).json({ message: "An email has been sent" }));
+
+}
+
+const resetPassword = async (req, res) => {
+  const {id, password } = req.body
+  
+  const checkIfPasswordFormatIsValid = (password) => {
+    const passwordIsValid = password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~])[A-Za-z\d`!@#$%^&*()_+\-=\[\]{};':"\\]{8,}$/);
+    if (!passwordIsValid) {
+      throw new Error("Invalid Password");
+    }
+    return password;
+  };
+
+  const encryptPassword = async (password) => {
+    const cryptedPassword = await bcrypt.hash(password, 10);
+    return cryptedPassword
+  }
+
+  return Promise.resolve(password)
+          .then(checkIfPasswordFormatIsValid)
+          .then(encryptPassword)
+          .then((cryptedPassword) => userChangePassword.Execute(id, cryptedPassword))
+          .then(() => res.status(200).json({ message: "Password updated" }))
+          .catch((error) => res.status(400).json(error.message));  
+}
+
 export default {
   userRegistration,
   userRegistrationConfirmation,
+  forgotPassword,
+  resetPassword
 };

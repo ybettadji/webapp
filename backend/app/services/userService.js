@@ -33,7 +33,6 @@ const findOneByIdAndUpdate = async (id, update) => {
         return await UserSchema.findOneAndUpdate({_id: id}, update)
     } catch (err) {
         throw new Error("The user does not exist");
-
     }
 }
 

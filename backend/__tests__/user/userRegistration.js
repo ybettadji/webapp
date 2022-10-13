@@ -40,7 +40,7 @@ describe('User', () => {
             it('should return a 201 status code and the message "The user has been created" ',  (done) => {
                 supertest(app)
                     .post('/user/registration')
-                    .send({email: validEmail, password: validPassword})
+                    .send({email: 'younes.bettadji@gmail.com', password: validPassword})
                     .then((response) => {
                         expect(response.statusCode).toEqual(201);
                         expect(response.body.message).toEqual("The user has been created")

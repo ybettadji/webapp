@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import {MatIconModule} from '@angular/material/icon';
 import { RegisterConfirmationComponent } from './components/register-confirmation/register-confirmation.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 
 
@@ -15,7 +16,8 @@ import { RegisterConfirmationComponent } from './components/register-confirmatio
     LoginComponent,
     RegisterComponent,
     ForgotPasswordComponent,
-    RegisterConfirmationComponent
+    RegisterConfirmationComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,

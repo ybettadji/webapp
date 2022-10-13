@@ -21,6 +21,7 @@ const sendEmail = async (sender, recipients, subject, template, customID, cc, bc
     ],
   };
 
+
   return await mailjet
     .post('send', { version: 'v3.1' })
     .request(data)

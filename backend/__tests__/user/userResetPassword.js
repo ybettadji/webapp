@@ -38,7 +38,7 @@ describe('User', () => {
         describe('Known email with good token', () => {
             it('should change the password of userActive3 and return a 200 status', (done) => {
                 supertest(app)
-                .post('/user/reset-password/' + tokenService.createResetPasswordToken(userActive3))
+                .put('/user/reset-password/' + tokenService.createResetPasswordToken(userActive3))
                 .send({password: validPassword})
                 .then((response) => {
                     expect(response.statusCode).toEqual(200)
@@ -52,10 +52,12 @@ describe('User', () => {
         describe('Known email with good token but invalidPassword', () => {
             it('should return a 400 status', (done) => {
                 supertest(app)
-                .post('/user/reset-password/' + tokenService.createResetPasswordToken(userInactive2))
+                .put('/user/reset-password/' + tokenService.createResetPasswordToken(userInactive2))
                 .send({password: invalidPassword})
                 .then((response) => {
                     expect(response.statusCode).toEqual(400)
+                    expect(response.body).toEqual("Invalid Password")
+
                     done()
                 })
             })
@@ -63,9 +65,9 @@ describe('User', () => {
         })
         
         describe('with a wrong token', () => {
-            it('should return a 401 status', (done) => {
+            it('should return a 401 status ', (done) => {
                 supertest(app)
-                .post('/user/reset-password/' + 'ioehdws879wyedhasijlkjl')
+                .put('/user/reset-password/' + 'ioehdws879wyedhasijlkjl.udwenicsjk')
                 .send({password: validPassword})
                 .then((response) => {
                     expect(response.statusCode).toEqual(401)

@@ -14,26 +14,27 @@ export class RegisterConfirmationComponent implements OnInit, OnDestroy {
 
   successfulConfirmation: boolean = false
   registerConfirmation$!: Observable<any>
-  id!: string;
+  token!: string;
   destroy$: Subject<boolean> = new Subject()
 
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['id']
-    this.registerConfirmation$ = this.http.put(environment.SERVER_URL + "/user/registration/confirmation/" + this.id, {})
+    this.token = this.route.snapshot.params['token']
+    this.registerConfirmation$ = this.http.put(environment.SERVER_URL + "/user/registration/confirmation/" + this.token, {})
     this.registerConfirmation$.pipe(
       takeUntil(this.destroy$)
     ).subscribe({
       error: (httpError) => this.onNavigate('/login'),
-      complete: () => this.successfulConfirmation = true})
+      complete: () => this.successfulConfirmation = true
+    })
   }
 
   ngOnDestroy(): void {
-      this.destroy$.next(true)
+    this.destroy$.next(true)
   }
 
-  onNavigate(path: string){
+  onNavigate(path: string) {
     this.router.navigateByUrl(path)
   }
 }

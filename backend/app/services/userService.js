@@ -1,4 +1,5 @@
 import UserSchema from "../externalServices/databases/mongodb/models/User.js";
+import bcrypt from 'bcrypt'
 
 const createUserInDB = async (user) => {
     const newUser = new UserSchema(user)
@@ -36,11 +37,16 @@ const findOneByIdAndUpdate = async (id, update) => {
     }
 }
 
+const paswordEncrypter = async (password) => {
+    return await bcrypt.hash(password, 10);
+} 
+
 
 export default {
     createUserInDB,
     findOneUserByProperty,
     findUserById,
-    findOneByIdAndUpdate
+    findOneByIdAndUpdate,
+    paswordEncrypter
 }
 

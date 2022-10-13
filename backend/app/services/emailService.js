@@ -4,8 +4,9 @@ import { resetPasswordTemplate } from "../externalServices/emails/templates/rese
 import tokenService from "./tokenService.js"
 
 const sendRegistrationConfirmationEmail = (user) => { 
-
     const token = user.registrationConfirmationToken 
+    console.log(token);
+
     const sender = {
         Email: process.env.MJ_SENDER_EMAIL,
         Name: process.env.MJ_SENDER_NAME
@@ -25,8 +26,8 @@ const sendRegistrationConfirmationEmail = (user) => {
 
 
 const sendResetPasswordEmail = (user) => {
-
     const token = user.resetPasswordToken
+    console.log(token);
     const sender = {
         Email: process.env.MJ_SENDER_EMAIL,
         Name: process.env.MJ_SENDER_NAME

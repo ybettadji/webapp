@@ -1,14 +1,29 @@
 import userService from "../../services/userService.js";
+import {UserPasswordEntity} from '../entities/UserEntity.js'
 
-const Execute = async (id, encryptedPassword) => {
+const Execute = async (idAndPassword) => {
+
+    const {id, password} = idAndPassword
+
+    const createUserPasswordEntity = (password) => {
+        return new UserPasswordEntity({
+            password: password
+        })
+    }
+
+    const encryptPassword = async (userPasswordEntity) => {
+        return await userService.paswordEncrypter(userPasswordEntity.password)
+      }
 
     const changePasswordInDB = async (id, encryptedPassword) => {
-    const user2 = await userService.findOneByIdAndUpdate(id, { password: encryptedPassword });
-};
+        return await userService.findOneByIdAndUpdate(id, { password: encryptedPassword });
+    };
 
-  return Promise.resolve(id)
-                .then((id) => changePasswordInDB(id, encryptedPassword))
-                .catch((err) => {throw err;});
+  return Promise.resolve(password)
+        .then(createUserPasswordEntity)
+        .then(encryptPassword)
+        .then((cryptedPassword) => changePasswordInDB(id, cryptedPassword))
+        .catch((err) => {throw err;});
 };
 
 export default {

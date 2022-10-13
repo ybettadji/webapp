@@ -55,7 +55,7 @@ describe('User', () => {
                 .send({email: emailNotRegisteredInDB})
                 .then((response) => {
                     expect(response.statusCode).toEqual(200)
-                    expect(response.body.message).toEqual("An email has been sent")
+                    expect(response.body.message).toEqual("An email has been sent ")
                     done()
                 })
             })

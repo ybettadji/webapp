@@ -1,8 +1,8 @@
-import { HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map, Observable, Subject, takeUntil, tap} from 'rxjs';
+import { map, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { RegisterService } from '../../services/register.service';
 import { environment } from 'src/environments/environment';
 
@@ -32,10 +32,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   passwordsAreEqual: boolean | null = null;
   validPassword: boolean | null = null
   successfulRegistration: boolean = false;
-  
+
   constructor(private router: Router, private formBuilder: FormBuilder, private registerService: RegisterService,
-              private http: HttpClient) {
-    
+    private http: HttpClient) {
+
   }
 
   ngOnInit(): void {
@@ -44,9 +44,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       userPassword: [null],
       confirmPassword: [null]
     },
-    {
-      updateOn: 'blur'
-    })
+      {
+        updateOn: 'blur'
+      })
 
     this.registerFormLiveChecking$ = this.registerForm.valueChanges.pipe(
       takeUntil(this.destroy$),
@@ -57,30 +57,30 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.registerFormLiveChecking$.subscribe()
   }
 
-  ngOnDestroy(): void{
+  ngOnDestroy(): void {
     this.destroy$.next(true)
   }
 
-  onNavigate(path: string): void{
+  onNavigate(path: string): void {
     this.router.navigateByUrl(path)
   }
 
-  checkIfEmailIsValid(userEmail: string){
-     if(userEmail !== null){
+  checkIfEmailIsValid(userEmail: string) {
+    if (userEmail !== null) {
       const userEmailIsValid = this.registerService.checkEmail(userEmail)
       userEmailIsValid ? this.userEmailClass = '' : this.userEmailClass = 'input-not-valid';
     }
   }
 
-  checkIfPasswordsAreEqual(userPassword: string, confirmPassword: string){
-    if(confirmPassword !== null){
+  checkIfPasswordsAreEqual(userPassword: string, confirmPassword: string) {
+    if (confirmPassword !== null) {
       this.passwordsAreEqual = this.registerService.passwordsAreEqual(userPassword, confirmPassword)
       this.passwordsAreEqual ? this.passwordClass = '' : this.passwordClass = 'input-not-valid'
     }
   }
 
-  checkPasswordRequirements(userPassword: string){
-    if(userPassword !== null){
+  checkPasswordRequirements(userPassword: string) {
+    if (userPassword !== null) {
       this.passwordRequirements = {
         enoughChar: this.registerService.hasEnoughChar(userPassword, 8),
         upperCase: this.registerService.hasUpperCase(userPassword),
@@ -92,16 +92,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
   }
 
-  errorHandler(httpError: HttpErrorResponse){
-    console.log(httpError);
-    
+  errorHandler(httpError: HttpErrorResponse) {
     if (httpError.error === 'The user already exists') {
       this.emailIsAvailable = false;
       this.userEmailClass = 'input-not-valid';
     }
   }
 
-  resetErrorMessagesAndStyles(){
+  resetErrorMessagesAndStyles() {
     this.emailIsAvailable = null;
     this.userEmailClass = '';
     this.passwordClass = '';
@@ -109,24 +107,25 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.validPassword = null;
   }
 
-  finishRegistrationProcess(){
+  finishRegistrationProcess() {
     this.successfulRegistration = true
   }
 
-  onSubmit(){
+  onSubmit() {
     const formIsValid = this.registerService.checkForm(this.registerForm.value)
 
-    if(formIsValid){
+    if (formIsValid) {
       this.resetErrorMessagesAndStyles()
       const newUser = {
         email: this.registerForm.value.userEmail,
         password: this.registerForm.value.userPassword
       }
-      const registerUser$ = this.http.post(environment.SERVER_URL + '/user/registration', newUser).pipe(takeUntil(this.destroy$))   
+      const registerUser$ = this.http.post(environment.SERVER_URL + '/user/registration', newUser).pipe(takeUntil(this.destroy$))
       registerUser$.subscribe({
-          error: (httpError) => this.errorHandler(httpError),
-          complete: () => this.finishRegistrationProcess()})
-    } 
+        error: (httpError) => this.errorHandler(httpError),
+        complete: () => this.finishRegistrationProcess()
+      })
+    }
   }
 }
 

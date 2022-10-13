@@ -26,7 +26,6 @@ export class ForgotPasswordComponent implements OnInit {
 
   }
 
-
   onNavigate(path: string) {
     this.router.navigateByUrl(path)
   }
@@ -41,6 +40,7 @@ export class ForgotPasswordComponent implements OnInit {
       return false
     }
   }
+
 
   finishForgotPasswordProcess() {
     this.successfulForgotPassword = true

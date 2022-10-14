@@ -41,12 +41,16 @@ const paswordEncrypter = async (password) => {
     return await bcrypt.hash(password, 10);
 } 
 
+const comparePasswords = async (plaintextPassword, cryptedPassword) => {
+    return await bcrypt.compare(plaintextPassword, cryptedPassword)
+}
 
 export default {
     createUserInDB,
     findOneUserByProperty,
     findUserById,
     findOneByIdAndUpdate,
-    paswordEncrypter
+    paswordEncrypter,
+    comparePasswords
 }
 

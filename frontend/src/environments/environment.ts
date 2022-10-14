@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  SERVER_URL: 'http://localhost:3003'
+  SERVER_URL: 'http://localhost:3003',
+  SESSION_TOKEN_NAME: 'paycript'
 };
 
 /*

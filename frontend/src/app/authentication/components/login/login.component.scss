@@ -33,6 +33,19 @@ h1 {
     margin-bottom: 30px;
 }
 
+.wrong {
+    font-size: 12px;
+    border: 1px solid red;
+    padding: 3px;
+    margin-bottom: 5px;
+}
+
+.error-div {
+    margin-bottom: 15px;
+    color: red;
+    text-align: center;
+}
+
 .inputs {
     display: flex;
     flex-direction: column;
@@ -54,13 +67,6 @@ input {
 input:focus,
 .input-not-valid:focus {
     outline: none;
-}
-
-.wrong {
-    font-size: 12px;
-    border: 1px solid red;
-    padding: 3px;
-    margin-bottom: 5px;
 }
 
 ul {

@@ -3,7 +3,6 @@ import emailService from "../../services/emailService.js";
 import userService from "../../services/userService.js";
 
 const Execute = async (email) => {
-    
     const checkIfEmailExist = async (email) => {
         const userFound = await userService.findOneUserByProperty({email: email});
         if (!userFound) {

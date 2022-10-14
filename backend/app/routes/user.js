@@ -11,4 +11,5 @@ router.put("/registration/confirmation/:token", checkIfTheRegisterConfirmationTo
 router.post('/forgot-password', userController.forgotPassword)
 router.put('/reset-password/:token', middlewareResetPassword , userController.resetPassword)
 
+router.post('/login', userController.login)
 export default router;

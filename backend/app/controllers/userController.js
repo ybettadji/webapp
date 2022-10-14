@@ -3,6 +3,7 @@ import userAccountConfirmation from "../domain/usecases/userAccountConfirmation.
 import bcrypt from "bcrypt";
 import userForgotPassword from "../domain/usecases/userForgotPassword.js";
 import userChangePassword from "../domain/usecases/userChangePassword.js";
+import userLogin from "../domain/usecases/userLogin.js";
 
 const userRegistration = (req, res) => {
 
@@ -95,9 +96,29 @@ const resetPassword = async (req, res) => {
           .catch((error) => res.status(400).json(error.message));  
 }
 
+const login = async (req, res) => {
+
+  const checkIfThereIsEmailAndPassword = (body) => {
+    const { email, password } = body;
+
+    if (!email || !password) {
+      throw new Error("Invalid User");
+    }
+    return body;
+  };
+
+  return Promise.resolve(req.body)
+      .then(checkIfThereIsEmailAndPassword)
+      .then(userLogin.Execute)
+      .then((token) => res.status(200).json({token: token}))
+      .catch(() => res.status(401).json({message: "Unauthorized access"}))
+
+}
+
 export default {
   userRegistration,
   userRegistrationConfirmation,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  login
 };

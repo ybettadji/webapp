@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmailValidator, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   login$!: Observable<any>
   wrongCombination!: boolean
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient) { }
+  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
   }
 
   successfulLogin(response: any) {
-    sessionStorage.setItem(environment.SESSION_TOKEN_NAME, response.token)
+    this.authService.createToken(environment.SESSION_TOKEN_NAME, response.token)
     this.onNavigate('/')
   }
 

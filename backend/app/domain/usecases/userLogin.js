@@ -41,8 +41,8 @@ const Execute = async (userEmailAndPassword) => {
         return user
     }
 
-    const createLoginToken = (user) =>{
-        return tokenService.createLoginToken(user)
+    const createSessionToken = (user) =>{
+        return tokenService.createSessionToken(user)
     } 
 
 
@@ -52,7 +52,7 @@ const Execute = async (userEmailAndPassword) => {
             .then(RetrieveTheUserLinkedToTheEmail)
             .then(checkTheUserStatus)
             .then(comparePasswords)
-            .then(createLoginToken)
+            .then(createSessionToken)
             .catch((err) => {throw err;});
 
 

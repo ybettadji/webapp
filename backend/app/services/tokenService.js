@@ -14,7 +14,7 @@ const createResetPasswordToken = (user) => {
     return jsonwebtokenService.createToken(payload, secretKey, config)
 }
 
-const createLoginToken = (user) => {
+const createSessionToken = (user) => {
     const payload = {userId: user._id}
     const secretKey = process.env.JWT_SECRET_KEY + user.password
     const config = {expiresIn: '1d'};
@@ -31,5 +31,5 @@ export default {
     createRegistrationConfirmationToken,
     createResetPasswordToken,
     verifyToken,
-    createLoginToken
+    createSessionToken
 }

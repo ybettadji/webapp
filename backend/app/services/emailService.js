@@ -21,7 +21,7 @@ const sendRegistrationConfirmationEmail = (user) => {
     const customID = 'Registration Confirmation'
 
     
-    return mailjetService.sendEmail(sender, recipient, subject, template, customID, [], []);
+    //return mailjetService.sendEmail(sender, recipient, subject, template, customID, [], []);
 }
 
 
@@ -42,7 +42,7 @@ const sendResetPasswordEmail = (user) => {
     const customID = 'Reset Password'
 
     
-    return mailjetService.sendEmail(sender, recipient, subject, template, customID, [], []);
+    //return mailjetService.sendEmail(sender, recipient, subject, template, customID, [], []);
 }
 
 export default {

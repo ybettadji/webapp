@@ -115,10 +115,15 @@ const login = async (req, res) => {
 
 }
 
+const allowAccess = (req, res) => {
+  res.status(200).json({message: "Access allowed"})
+}
+
 export default {
   userRegistration,
   userRegistrationConfirmation,
   forgotPassword,
   resetPassword,
-  login
+  login,
+  allowAccess
 };

@@ -3,19 +3,19 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { AuthService } from "../services/auth.service";
+import { TokenService } from "../services/token.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-    constructor(private authService: AuthService, private http: HttpClient, private router: Router) {
+    constructor(private tokenService: TokenService, private http: HttpClient, private router: Router) {
 
     }
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<any> {
 
         const getSessionToken = (): string | null => {
-            return this.authService.getToken(environment.SESSION_TOKEN_NAME)
+            return this.tokenService.getToken(environment.SESSION_TOKEN_NAME)
         }
 
         const checkIfSessionTokenExist = (token: string | null): string => {
@@ -28,8 +28,11 @@ export class AuthGuard implements CanActivate {
         const checkIfTheTokenIsValid = (token: string) => {
             const request$: Observable<any> = this.http.post(environment.SERVER_URL + '/user/verify-access', { token: token })
             return request$.subscribe({
-                error: () => this.router.navigateByUrl('/login'),
-                complete: () => true
+                error: () => {
+                    this.router.navigateByUrl('/login')
+                    return false
+                },
+                complete: () => { return false }
             })
         }
 
@@ -37,7 +40,10 @@ export class AuthGuard implements CanActivate {
             .then(getSessionToken)
             .then(checkIfSessionTokenExist)
             .then(checkIfTheTokenIsValid)
-            .catch(err => this.router.navigateByUrl('/login'))
+            .catch(err => {
+                this.router.navigateByUrl('/login')
+                return false
+            })
     }
 
 

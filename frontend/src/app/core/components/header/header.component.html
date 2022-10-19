@@ -1,0 +1,85 @@
+<!-- Desktop Menu -->
+
+<div class="container" *ngIf="screenWidth >= 970">
+    <div class="left">
+        <div class="logo">LOGO</div>
+
+        <div class="post row">
+            <mat-icon>add</mat-icon>
+            <p>Déposer une annonce</p>
+        </div>
+
+        <div class="search row">
+            <mat-icon>search</mat-icon>
+            <p>Rechercher</p>
+        </div>
+    </div>
+    <div class="right">
+
+        <div class="messages" *ngIf="isAuth">
+            <div class="message-icon">
+                <mat-icon>message</mat-icon>
+                <p class="badge">2</p>
+            </div>
+            <p>Messages</p>
+        </div>
+
+        <div class="account" *ngIf="isAuth">
+            <mat-icon>account_circle</mat-icon>
+            <p>Mon compte</p>
+        </div>
+
+        <div class="account" *ngIf="!isAuth" (click)="displayLoginComponent()">
+            <mat-icon>account_circle</mat-icon>
+            <p>Se connecter</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- Mobile Menu -->
+
+<div class="container" *ngIf="screenWidth < 970">
+    <mat-icon class="menu-icon" (click)="displayToggleMenu()">menu</mat-icon>
+    <div class="logo">LOGO</div>
+    <span></span>
+
+    <div class="body-menu" *ngIf="toggleMenu">
+        <mat-icon class="close-icon" (click)="hideToggleMenu()">close</mat-icon>
+        <div class="toggle-menu">
+            <div class="toggle-menu-logo">LOGO</div>
+            <div class="toggle-menu-post row-item">
+                <mat-icon>add</mat-icon>
+                <p>Déposer une annonce</p>
+            </div>
+            <div class="toggle-menu-search row-item">
+                <mat-icon>search</mat-icon>
+                <p>Rechercher</p>
+            </div>
+
+            <span class="line-separation"></span>
+
+            <div class="row-item2" *ngIf="isAuth">
+                <div class="toggle-menu-messages">
+                    <mat-icon>message</mat-icon>
+                    <p>Messages</p>
+                </div>
+                <p class="toggle-menu-badge">2</p>
+            </div>
+
+            <span class="line-separation"></span>
+
+            <div class="row-item2" *ngIf="isAuth">
+                <div class="toggle-menu-account">
+                    <mat-icon class="account-icon">account_circle</mat-icon>
+                    <p>Mon compte</p>
+                </div>
+                <mat-icon class="arrow-right-icon">keyboard_arrow_right</mat-icon>
+            </div>
+
+            <p class="login" *ngIf="!isAuth" (click)="displayLoginComponent()">Se connecter</p>
+
+        </div>
+    </div>
+
+</div>

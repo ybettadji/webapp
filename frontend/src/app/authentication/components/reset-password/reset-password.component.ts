@@ -51,6 +51,8 @@ export class ResetPasswordComponent implements OnInit {
       tap((form) => this.checkPasswordRequirements(form.password))
     )
     this.resetPasswordFormLiveChecking$.subscribe()
+
+    // this.successfulResetPassword = true
   }
 
   ngOnDestroy(): void {
@@ -94,6 +96,8 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   finishRegistrationProcess() {
+    this.resetPasswordForm.reset()
+
     this.successfulResetPassword = true
   }
 

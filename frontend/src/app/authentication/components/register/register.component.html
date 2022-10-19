@@ -1,4 +1,65 @@
-<div class="body">
+<div class="body" *ngIf="displayComponent">
+    <div class="container" *ngIf="!successfulRegistration">
+        <div class="header">
+            <h1>Creer un compte</h1>
+            <mat-icon class="icon-close" (click)="hideRegisterComponent()">close</mat-icon>
+        </div>
+        <div class="socials-media">
+            <div class="social-media">
+                <img src="../../../../assets/images/facebook-logo.png" class="social-media-icon" alt="facebook">
+                <h4>Continuer avec Facebook</h4>
+                <span></span>
+            </div>
+            <div class="social-media">
+                <img src="../../../../assets/images/google-logo.png" class="social-media-icon" alt="google">
+                <h4>Continuer avec Google</h4>
+                <span></span>
+            </div>
+            <div class="social-media">
+                <img src="../../../../assets/images/apple-logo.png" class="social-media-icon" alt="apple">
+                <h4>Continuer avec Apple</h4>
+                <span></span>
+            </div>
+        </div>
+        <div class="separatrion">
+            <span class="line-separation"></span>
+            <p>OU</p>
+            <span class="line-separation"></span>
+        </div>
+        <form [formGroup]="registerForm">
+            <p class="wrong error-div" *ngIf="emailIsAvailable === false">L'email est déjà utilisé</p>
+            <input type="text" [ngClass]='userEmailClass' placeholder="Email" formControlName="userEmail">
+            <input type="password" [ngClass]='passwordClass' placeholder="Mot de passe" formControlName="userPassword">
+            <input type="password" [ngClass]='passwordClass' placeholder="Confirmer le mot de passe"
+                formControlName="confirmPassword">
+            <p class="wrong error-div" *ngIf="passwordsAreEqual === false">Les mots de passe ne sont pas identiques
+            </p>
+            <p class="wrong error-div" *ngIf="validPassword === false">
+                Min. 8 caractères, 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère special(!@#$%^&*...)
+            </p>
+            <button class="main-button" type="submit" (click)="onSubmit()">Inscription</button>
+        </form>
+
+        <p class="second-button">Vous avez déjà un compte ? <a (click)="displayLoginComponent()">Se connecter</a>
+        </p>
+    </div>
+
+
+    <!-- success message  -->
+    <div class="success-container" *ngIf="successfulRegistration">
+        <div class="header">
+            <mat-icon class="check_circle">check_circle</mat-icon>
+            <mat-icon class="icon-close" (click)="hideRegisterComponent()">close</mat-icon>
+        </div>
+        <p class="text">Votre inscription a été effectué !</p>
+        <p class="text">Vous venez de recevoir un email afin d'activer votre compte</p>
+        <p class="second-button"><a (click)="displayLoginComponent()">Revenir à la page de connexion</a></p>
+    </div>
+    <!-- end success message -->
+
+</div>
+
+<!-- <div class="body">
         <form class="container" [formGroup]="registerForm" *ngIf="!successfulRegistration">
             <h1>Inscription</h1>
             <span id="line"></span>
@@ -22,4 +83,4 @@
             <p class="succes-text">Vous venez de recevoir un email afin d'activer votre compte</p>
             <p class="succes-login-text"><a (click)="onNavigate('/login')">Revenir à la page de connexion</a> </p>
         </div>
-</div>
+</div> -->

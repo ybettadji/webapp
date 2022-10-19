@@ -1,9 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EmailValidator, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { TokenService } from 'src/app/core/services/token.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -13,17 +13,38 @@ import { environment } from 'src/environments/environment';
 })
 export class LoginComponent implements OnInit {
 
+  @Input() displayComponent!: boolean
+  @Output() displayComponentChange: EventEmitter<boolean> = new EventEmitter<boolean>()
+  @Output() displayForgotPasswordComponentChange: EventEmitter<boolean> = new EventEmitter<boolean>()
+  @Output() displayRegisterComponentChange: EventEmitter<boolean> = new EventEmitter<boolean>()
+
+
   loginForm!: FormGroup
   login$!: Observable<any>
   wrongCombination!: boolean
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient, private authService: AuthService) { }
+  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient, private tokenService: TokenService) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: [null],
       password: [null]
     })
+  }
+
+  hideLoginComponent(): void {
+    this.displayComponentChange.emit(false)
+  }
+
+  displayForgotPasswordComponent(): void {
+    this.hideLoginComponent()
+    this.displayForgotPasswordComponentChange.emit(true)
+
+  }
+
+  displayRegisterComponent(): void {
+    this.hideLoginComponent()
+    this.displayRegisterComponentChange.emit(true)
   }
 
   onNavigate(path: string) {
@@ -35,7 +56,9 @@ export class LoginComponent implements OnInit {
   }
 
   successfulLogin(response: any) {
-    this.authService.createToken(environment.SESSION_TOKEN_NAME, response.token)
+    this.tokenService.createToken(environment.SESSION_TOKEN_NAME, response.token)
+    this.loginForm.reset()
+    this.hideLoginComponent()
     this.onNavigate('/')
   }
 

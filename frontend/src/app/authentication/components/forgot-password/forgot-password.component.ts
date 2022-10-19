@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ThisReceiver } from '@angular/compiler';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
@@ -13,6 +14,9 @@ import { environment } from 'src/environments/environment';
 })
 export class ForgotPasswordComponent implements OnInit {
 
+  @Input() displayComponent!: boolean
+  @Output() displayComponentChange: EventEmitter<boolean> = new EventEmitter<boolean>()
+  @Output() displayLoginComponentChange: EventEmitter<boolean> = new EventEmitter<boolean>()
   forgotPasswordForm!: FormGroup;
   emailIsValid!: boolean;
   successfulForgotPassword!: boolean;
@@ -23,7 +27,16 @@ export class ForgotPasswordComponent implements OnInit {
     this.forgotPasswordForm = this.formBuilder.group({
       email: [null]
     })
+    //   this.successfulForgotPassword = true
+  }
 
+  displayForgotPasswordComponent() {
+    this.displayComponentChange.emit(false)
+  }
+
+  displayLoginComponent() {
+    this.displayForgotPasswordComponent()
+    this.displayLoginComponentChange.emit(true)
   }
 
   onNavigate(path: string) {
@@ -43,6 +56,7 @@ export class ForgotPasswordComponent implements OnInit {
 
 
   finishForgotPasswordProcess() {
+    this.forgotPasswordForm.reset()
     this.successfulForgotPassword = true
   }
 

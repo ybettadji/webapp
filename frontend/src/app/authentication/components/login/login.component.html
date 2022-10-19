@@ -1,7 +1,72 @@
-<div class="body">
+<div class="body" *ngIf="displayComponent">
+    <div class="container">
+        <div class="header">
+            <h1>Se Connecter</h1>
+            <mat-icon class="icon-close" (click)="hideLoginComponent()">close</mat-icon>
+        </div>
+        <div class="socials-media">
+            <div class="social-media">
+                <img src="../../../../assets/images/facebook-logo.png" class="social-media-icon" alt="facebook">
+                <h4>Continuer avec Facebook</h4>
+                <span></span>
+            </div>
+            <div class="social-media">
+                <img src="../../../../assets/images/google-logo.png" class="social-media-icon" alt="google">
+                <h4>Continuer avec Google</h4>
+                <span></span>
+            </div>
+            <div class="social-media">
+                <img src="../../../../assets/images/apple-logo.png" class="social-media-icon" alt="apple">
+                <h4>Continuer avec Apple</h4>
+                <span></span>
+            </div>
+        </div>
+        <div class="separatrion">
+            <span class="line-separation"></span>
+            <p>OU</p>
+            <span class="line-separation"></span>
+        </div>
+        <form [formGroup]="loginForm">
+            <p class="wrong error-div" *ngIf="wrongCombination">Email ou mot de passe incorrect</p>
+            <input type="text" placeholder="Email" formControlName="email">
+            <input type="password" placeholder="Mot de passe" formControlName="password">
+            <button class="main-button" type="submit" (click)="onSubmit()">Connexion</button>
+            <div class="under-main-button">
+                <div>
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me">Rester connecté</label>
+                </div>
+                <a class="forgot-password" (click)="displayForgotPasswordComponent()">Mot de passe oublié ?</a>
+            </div>
+        </form>
+        <p class="second-button">Vous n'avez pas de compte ? <a (click)="displayRegisterComponent()">Créer un
+                compte</a></p>
+    </div>
+</div>
+
+<!-- <div class="body">
     <form class="container" [formGroup]="loginForm">
-        <h1>Connexion</h1>
+        <h1>Se Connecter</h1>
         <span id="line"></span>
+        <div class="socials-media">
+            <div class="social-media">
+                <mat-icon class="check_circle">check_circle</mat-icon>
+                <h4>Continuer avec Facebook</h4>
+            </div>
+            <div class="social-media">
+                <mat-icon class="check_circle">check_circle</mat-icon>
+                <h4>Continuer avec Google</h4>
+            </div>
+            <div class="social-media">
+                <mat-icon class="check_circle">check_circle</mat-icon>
+                <h4>Continuer avec Apple</h4>
+            </div>
+        </div>
+        <div class="separatrion">
+            <span class="line-separation"></span>
+            <p>OU</p>
+            <span class="line-separation"></span>
+        </div>
         <div class="inputs">
             <p class="wrong error-div" *ngIf="wrongCombination">Email ou mot de passe incorrect</p>
             <input type="text" placeholder="Email" formControlName="email">
@@ -12,4 +77,4 @@
         <button class="main-button" type="submit" (click)="onSubmit()">Connexion</button>
         <p class="second-button" (click)="onNavigate('/register')">Inscription</p>
     </form>
-</div>
+</div> -->

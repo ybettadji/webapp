@@ -1,7 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 * {
     font-family: 'Montserrat', sans-serif;
-  }
+    --primary-color: #f86c6e;
+    --primary-color-clear: #fff0f0;
+    --primary-color-hover: #e86567;
+    --error-color: red;
+    --background-color: white;
+    --text-primary-color: white;
+    --text-secondary-color: black;
+    --grey-line-color: #e4e5e7
+}
 
 // body {
 //     margin: 0;
@@ -190,5 +198,13 @@ img {
 select {
     max-width: 100%
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

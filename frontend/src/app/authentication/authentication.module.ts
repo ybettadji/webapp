@@ -25,7 +25,11 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     MatIconModule
   ],
   exports: [
-
+    LoginComponent,
+    RegisterComponent,
+    ForgotPasswordComponent,
+    RegisterConfirmationComponent,
+    ResetPasswordComponent
   ]
 })
 export class AuthenticationModule { }

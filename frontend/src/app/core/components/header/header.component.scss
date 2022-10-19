@@ -1,0 +1,265 @@
+.container {
+    width: 100%;
+    box-shadow: 0 1px 4px 0 rgb(0 0 0 / 20%);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 20px 10px 20px;
+}
+
+.left,
+.right {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.logo {
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.row {
+    display: flex;
+    gap: 5px;
+}
+
+p {
+    margin: auto !important;
+    font-size: 16px;
+}
+
+.post {
+    border-radius: 30px;
+    background-color: var(--primary-color);
+    padding: 10px;
+    color: var(--text-primary-color);
+    cursor: pointer;
+}
+
+.post:hover {
+    border-radius: 30px;
+    background-color: var(--primary-color-hover);
+}
+
+.search,
+.account {
+    cursor: pointer;
+    //  display: inline-block;
+}
+
+.search:hover,
+.account:hover {
+    text-shadow: 1px 0 0;
+}
+
+
+.messages,
+.account {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+.message-icon {
+    display: flex;
+    position: relative;
+    // display: inline-block;
+}
+
+.badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    padding: 1px 6px;
+    border-radius: 100%;
+    background-color: var(--primary-color);
+    color: var(--text-primary-color);
+
+}
+
+mat-icon {
+    font-size: 30px;
+    height: auto;
+    width: auto;
+}
+
+
+@media screen and (max-width: 970px) {
+
+    .menu-icon {
+        cursor: pointer
+    }
+
+    p {
+        margin: 0 !important;
+        font-size: 16px;
+    }
+
+    .container {
+        width: 100% !important;
+        justify-content: space-between;
+    }
+
+    .body-menu {
+        background: rgba($color: #000000, $alpha: 0.5);
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .close-icon {
+        font-size: 40px;
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        cursor: pointer;
+        color: var(--text-primary-color)
+    }
+
+    .toggle-menu {
+        position: absolute;
+        width: 85%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .row-item {
+        display: flex;
+        align-items: center;
+        margin: 10px;
+        padding: 10px;
+        cursor: pointer;
+        gap: 20px;
+
+        &:hover {
+            background-color: var(--primary-color-clear);
+            color: var(--primary-color);
+        }
+    }
+
+    .row-item2 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 10px;
+        padding: 10px;
+        cursor: pointer;
+        gap: 20px;
+
+        &:hover {
+            background-color: var(--primary-color-clear);
+            color: var(--primary-color);
+        }
+    }
+
+    .toggle-menu-messages {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        gap: 20px;
+    }
+
+
+    .toggle-menu-logo {
+        text-align: center;
+        padding: 20px;
+        border: none
+    }
+
+    .account-icon {
+        font-size: 50px;
+    }
+
+    .login {
+        cursor: pointer;
+        border-radius: 4px;
+        background-color: var(--primary-color);
+        color: var(--text-primary-color);
+        width: fit-content;
+        padding: 15px;
+        margin: 15px 0 0 20px !important;
+    }
+
+    .toggle-menu-badge {
+        padding: 1px 6px;
+        border-radius: 100%;
+        background-color: var(--primary-color);
+        color: var(--text-primary-color);
+    }
+
+    // .post {
+    //     display: flex;
+    //     flex-direction: row;
+    //     border-radius: 0px;
+    //     background-color: var(--primary-color);
+    //     padding: 0px;
+    //     color: var(--text-primary-color);
+    //     cursor: pointer;
+    //     //text-align: left;
+    // }
+
+    .line-separation {
+        border: 1px solid #e4e5e7;
+        width: 100%;
+        //  margin: auto;
+    }
+
+    // .messages {
+    //     display: flex;
+    //     flex-direction: row;
+    //     justify-content: flex-start;
+    //     align-items: flex-start;
+    // }
+
+    // .account {
+    //     display: flex;
+    //     flex-direction: column;
+    //     justify-content: flex-start;
+    //     align-items: flex-start;
+    //     border: 1px solid black;
+    // }
+
+
+
+    // .message-icon {
+    //     display: flex;
+    //     //  gap: 10px;
+    //     position: relative;
+    //     // display: inline-block;
+    // }
+
+    // .badge {
+    //     position: absolute;
+    //     top: -8px;
+    //     right: -8px;
+    //     padding: 1px 6px;
+    //     border-radius: 100%;
+    //     background: red;
+    //     color: white;
+
+    // }
+
+
+    // p {
+    //     margin: 0 !important;
+    //     font-size: 16px;
+    // }
+
+
+
+    // .second-button {
+    //     margin: 0;
+    //     margin-top: auto;
+    // }
+
+
+}

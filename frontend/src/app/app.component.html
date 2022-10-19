@@ -1,1 +1,28 @@
+<app-header *ngIf="isAuth === true || isAuth === false " [isAuth]="isAuth"
+    (displayLoginComponentChange)="changeDisplayLoginComponent($event)"></app-header>
+
+<app-login [displayComponent]="displayLoginComponent" (displayComponentChange)="changeDisplayLoginComponent($event)"
+    (displayForgotPasswordComponentChange)="changeDisplayForgotPasswordComponent($event)"
+    (displayRegisterComponentChange)="changeDisplayRegisterComponent($event)">
+</app-login>
+
+<app-forgot-password [displayComponent]="displayForgotPasswordComponent"
+    (displayComponentChange)="changeDisplayForgotPasswordComponent($event)"
+    (displayLoginComponentChange)="changeDisplayLoginComponent($event)">
+</app-forgot-password>
+
+
+<app-register [displayComponent]="displayRegisterComponent"
+    (displayComponentChange)="changeDisplayRegisterComponent($event)"
+    (displayLoginComponentChange)="changeDisplayLoginComponent($event)"></app-register>
+
+
 <router-outlet></router-outlet>
+
+
+
+
+<!-- 
+younes.bettadji@gmail.com
+1fdvfdewffdvfdvf*(H8976G*&76rgre
+-->

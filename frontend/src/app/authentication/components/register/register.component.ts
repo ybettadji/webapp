@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map, Observable, Subject, takeUntil, tap } from 'rxjs';
@@ -13,6 +13,10 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
+
+  @Input() displayComponent!: boolean;
+  @Output() displayComponentChange: EventEmitter<boolean> = new EventEmitter<boolean>()
+  @Output() displayLoginComponentChange: EventEmitter<boolean> = new EventEmitter<boolean>()
 
   registerForm!: FormGroup;
   registerFormLiveChecking$!: Observable<any>;
@@ -55,11 +59,23 @@ export class RegisterComponent implements OnInit, OnDestroy {
       tap((form) => this.checkPasswordRequirements(form.userPassword))
     )
     this.registerFormLiveChecking$.subscribe()
+
+    // this.successfulRegistration = true
   }
 
   ngOnDestroy(): void {
     this.destroy$.next(true)
   }
+
+  hideRegisterComponent() {
+    this.displayComponentChange.emit(false)
+  }
+
+  displayLoginComponent() {
+    this.hideRegisterComponent()
+    this.displayLoginComponentChange.emit(true)
+  }
+
 
   onNavigate(path: string): void {
     this.router.navigateByUrl(path)
@@ -108,6 +124,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   finishRegistrationProcess() {
+    this.registerForm.reset()
     this.successfulRegistration = true
   }
 

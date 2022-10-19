@@ -1,29 +1,43 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
+import { TokenService } from "./token.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
 
-    constructor() {
+    authenticated!: boolean;
+
+    constructor(private tokenService: TokenService, private http: HttpClient) {
 
     }
+    async isAuth(): Promise<any> {
+        const getSessionToken = (): string | null => {
+            return this.tokenService.getToken(environment.SESSION_TOKEN_NAME)
+        }
 
-    createToken(tokenName: string, token: string): void {
-        sessionStorage.setItem(tokenName, token)
-    }
+        const checkIfSessionTokenExist = (token: string | null): string => {
+            if (!token) {
+                throw new Error("Unauthorized access");
+            }
+            return token
+        }
 
-    getToken(tokenName: string): string | null {
-        return sessionStorage.getItem(tokenName);
+        const checkIfTheTokenIsValid = (token: string) => {
+            const request$: Observable<any> = this.http.post(environment.SERVER_URL + '/user/verify-access', { token: token })
+            return request$.subscribe({
+                error: () => { return false },
+                complete: () => { return true }
+            })
+        }
 
-    }
-
-    removeToken(tokenName: string): void {
-        sessionStorage.removeItem(tokenName);
-    }
-
-    removeSessionStorage(): void {
-        sessionStorage.clear();
+        return await Promise.resolve()
+            .then(getSessionToken)
+            .then(checkIfSessionTokenExist)
+            .then(checkIfTheTokenIsValid)
+            .catch(err => { return false })
     }
 }
